@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Song</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+</head>
+
+<body class="grey__body">
+    <header class="header" id="header">
+        <a>Songs</a>
+        <nav class="nav" id="nav">
+            <a>username</a>
+            <a>Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section class="song__info" id="songInfo">
+            <img src="img/album_cover.png" class="album__cover" id="albumCover">
+            <div class="text__info">
+                <h1>SongName</h1>
+                <p id="text">Author</p>
+                <p id="text">AlbumName</p>
+            </div>
+        </section>
+        <div class="lyrics__info" id="lyricsInfo">
+            <div class="lyrics" id="lyrics">
+                <article>
+                    <p>
+                        Some text
+                        <br>
+                        <a class="highlited__lyric" id="highlitedLyric">Some text with meaning</a>
+                    </p>
+                </article>
+                <section class="comments">
+                    <form method="POST" name="comment">
+                        <input type="text" name="comment" placeholder="Add a comment..." class="comment__input" id="commentInput"><br>
+                        <input type="submit" name="comment" value="Add" class="comment__add__button" id="commentAddButton">
+                    </form>
+                    <ul class="comments">
+                        <li class="comment">
+                            <figure>
+                                <img src="img/default_avatar.png" class="comment__profile__image">
+                                <figcaption class="comment__username">username</figcaption>
+                            </figure>
+                            <p class="comment__text">This is a great song!</p>
+                            <div class="rate" id="rate">
+                                <button class="rate__button">👍</button>
+                                <p class="likes">+126</p>
+                                <button class="rate__button">👎</button>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <aside class="translations" id="translations">
+                <p>Translations:</p>
+                <ol>
+                    <li class="translation__link" id="translationLink">
+                        <a>Translation one</a>
+                    </li>
+                </ol>
+            </aside>
+            <aside class="annotations__block" id="annotationsBlock">
+                <svg width="31" min-height="1076" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M26 0V484.5L5 533.5L26 594V1076" stroke="#009900" stroke-opacity="0.4" stroke-width="9"/>
+                    </svg>
+                <div class="annotations">
+                    <p>Annotations:</p>
+                    <ul>
+                        <li class="annotation__block">
+                            <h2>username</h2>
+                            <p>This text has so much meaning to it.<button><img src="img/delete.png" class="delete__button__image"></button></p>
+                            <div class="rate">
+                                <button class="rate__button">👍</button>
+                                <p class="likes">+126</p>
+                                <button class="rate__button">👎</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <aside class="add__annotation" id="addAnnotation">
+                <p>Add annotation:</p>
+                <form method="POST" name="addAnnotation">
+                    <input type="text" name="addAnnotation" class="annotation__input">
+                    <input value="Add" type="submit" name="addAnnotation" class="comment__add__button">
+                </form>
+            </aside>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add new song</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+</head>
+
+<body class="dark__body">
+    <header class="header" id="header">
+        <a>Songs</a>
+        <nav class="nav" id="nav">
+            <a>username</a>
+            <a>Logout</a>
+        </nav>
+    </header>
+    <main class="main" id="centeredMain">
+        <h1>Add new song:</h1>
+        <form method="POST" name="addSong" class="song__form" id="songForm">
+            <div>
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="addSong" class="input" required><br>
+                <label for="author">Author:</label><br>
+                <input type="text" id="author" name="addSong" class="input" required><br>
+                <label for="albumName">Album name:</label><br>
+                <input type="text" id="albumName" name="addSong" class="input" required><br>
+            </div>
+            <div class="lyrics__form">
+                <label for="lyrics">Lyrics:</label><br>
+                <input type="text" id="lyrics" name="addSong" class="lyrics__input"><br>
+            </div>
+            <input type="submit" value="Add" name="addSong" class="form__button" id="addSongButton">
+        </form>
+    </main>
+</body>
+
+</html>

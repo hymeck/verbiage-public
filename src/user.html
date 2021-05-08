@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+</head>
+
+<body>
+    <header class="header" id="header">
+        <a>Songs</a>
+        <nav class="nav" id="nav">
+            <a>username</a>
+            <a>Logout</a>
+        </nav>
+    </header>
+    <main class="main" id="main">
+        <div class="user" id="user">
+            <img class="profile__picture" src="img/default_avatar.png" alt="Profile picture" id="profilePicture">
+            <div class="user__info">
+                <h1 class="username">username</h1>
+                <button class="add__new__song__button" id="addNewSongButton">Add new song</button>
+            </div>
+        </div>
+        <h1>Your songs:</h1>
+        <ul>
+            <li class="song__item" id="songItem">
+                <p>1</p>
+                <img src="img/album_cover.png" class="item__image" alt="Album cover">
+                <a class="song__name" id="songName">SongName</a>
+                <p class="author" id="author">Author</p>
+                <p id="albumName">Albumname</p>
+                <button><img src="img/delete.png" class="delete__button__image" id="deleteButtonImage"></button>
+            </li>
+        </ul>
+    </main>
+</body>
+
+</html>
