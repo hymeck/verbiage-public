@@ -8,26 +8,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
 </head>
 
 <body class="dark__body">
     <header class="header" id="header">
         <a>Songs</a>
         <nav class="nav" id="nav">
-            <a>sign in</a>
-            <a>sign up</a>
+            <a href="login.html">sign in</a>
+            <a href="register.html">sign up</a>
         </nav>
     </header>
     <main id="authenticationMain">
         <h1 class="green__h1" id="greenH1">sign in</h1>
-        <form method="POST" name="login" class="authorization__form">
+        <form method="POST" name="login" class="authorization__form" action="javascript:void(0);">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="login" class="input authorization__input"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="login" class="input authorization__input"><br>
-            <input type="submit" value="Sign In" name="login" class="form__button centered" id="authenticationButton">
+            <button type="submit" name="login" class="form__button centered" id="authenticationButton" onclick="onLogin()">sign in</button>
         </form>
     </main>
+    
+    <script>
+        function getEmail() { return document.getElementById('email').value; }
+        function getPassword() { return document.getElementById('password').value; }
+
+        function onLogin()
+        {
+            let email = getEmail();
+            let password = getPassword();
+            loginUser(email, password);
+        }
+    </script>
 </body>
 
 </html>

@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
 </head>
 
 <body class="grey__body">
@@ -22,38 +28,39 @@
         <section class="song__info" id="songInfo">
             <img src="img/album_cover.png" class="album__cover" id="albumCover">
             <div class="text__info">
-                <h1>SongName</h1>
-                <p id="text">Author</p>
-                <p id="text">AlbumName</p>
+                <input type="hidden" id="songKey" value="">
+                <h1 id="title"></h1>
+                <p id="author"></p>
+                <p id="albumName"></p>
             </div>
         </section>
         <div class="lyrics__info" id="lyricsInfo">
-            <div class="lyrics" id="lyrics">
-                <article>
-                    <p>
-                        Some text
-                        <br>
-                        <a class="highlited__lyric" id="highlitedLyric">Some text with meaning</a>
-                    </p>
+            <div class="lyrics">
+                <article id="lyrics">
+<!--                    <p>-->
+<!--                        Some text-->
+<!--                        <br>-->
+<!--                        <a class="highlited__lyric" id="highlitedLyric">Some text with meaning</a>-->
+<!--                    </p>-->
                 </article>
                 <section class="comments">
                     <form method="POST" name="comment">
                         <input type="text" name="comment" placeholder="Add a comment..." class="comment__input" id="commentInput"><br>
-                        <input type="submit" name="comment" value="Add" class="comment__add__button" id="commentAddButton">
+                        <button type="submit" name="comment" class="comment__add__button" id="commentAddButton" onclick="onComment()">add</button>
                     </form>
-                    <ul class="comments">
-                        <li class="comment">
-                            <figure>
-                                <img src="img/default_avatar.png" class="comment__profile__image">
-                                <figcaption class="comment__username">username</figcaption>
-                            </figure>
-                            <p class="comment__text">This is a great song!</p>
-                            <div class="rate" id="rate">
-                                <button class="rate__button">👍</button>
-                                <p class="likes">+126</p>
-                                <button class="rate__button">👎</button>
-                            </div>
-                        </li>
+                    <ul class="comments" id="comments">
+<!--                        <li class="comment">-->
+<!--                            <figure>-->
+<!--                                <img src="img/default_avatar.png" class="comment__profile__image">-->
+<!--                                <figcaption class="comment__username">username</figcaption>-->
+<!--                            </figure>-->
+<!--                            <p class="comment__text">This is a great song!</p>-->
+<!--                            <div class="rate" id="rate">-->
+<!--                                <button class="rate__button">👍</button>-->
+<!--                                <p class="likes">+126</p>-->
+<!--                                <button class="rate__button">👎</button>-->
+<!--                            </div>-->
+<!--                        </li>-->
                     </ul>
                 </section>
             </div>
@@ -66,33 +73,246 @@
                 </ol>
             </aside>
             <aside class="annotations__block" id="annotationsBlock">
-                <svg width="31" min-height="1076" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M26 0V484.5L5 533.5L26 594V1076" stroke="#009900" stroke-opacity="0.4" stroke-width="9"/>
-                    </svg>
+                <svg width="9%" height="100%" viewBox="0 0 39 100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_d)">
+                        <path d="M30 0V484.5L9 533.5L30 594V100000" stroke="#009900" stroke-opacity="0.4" stroke-width="9"/>
+                    </g>
+                    <defs>
+                        <filter id="filter0_d" x="0.177368" y="0" width="38.3227" height="100000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                            <feOffset dy="4"/>
+                            <feGaussianBlur stdDeviation="2"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                        </filter>
+                    </defs>
+                </svg>
                 <div class="annotations">
                     <p>Annotations:</p>
-                    <ul>
-                        <li class="annotation__block">
-                            <h2>username</h2>
-                            <p>This text has so much meaning to it.<button><img src="img/delete.png" class="delete__button__image"></button></p>
-                            <div class="rate">
-                                <button class="rate__button">👍</button>
-                                <p class="likes">+126</p>
-                                <button class="rate__button">👎</button>
-                            </div>
-                        </li>
+                    <ul id="annotations">
+<!--                        <li class="annotation__block">-->
+<!--                            <h2>username</h2>-->
+<!--                            <p>This text has so much meaning to it.<button><img src="img/delete.png" class="delete__button__image"></button></p>-->
+<!--                            <div class="rate">-->
+<!--                                <button class="rate__button">👍</button>-->
+<!--                                <p class="likes">+126</p>-->
+<!--                                <button class="rate__button">👎</button>-->
+<!--                            </div>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </aside>
             <aside class="add__annotation" id="addAnnotation">
                 <p>Add annotation:</p>
                 <form method="POST" name="addAnnotation">
-                    <input type="text" name="addAnnotation" class="annotation__input">
-                    <input value="Add" type="submit" name="addAnnotation" class="comment__add__button">
+                    <textarea name="addAnnotation" class="annotation__input" id="annotationInput"></textarea>
+                    <button type="submit" name="addAnnotation" class="comment__add__button" id="addAnnotationButton">add</button>
                 </form>
             </aside>
         </div>
     </main>
-</body>
+    
+    <script>
+        document.onload = onLoad();
+        
+        async function setSongData(songKey, song) {
+            document.getElementById('title').innerText = song.title;
+            document.getElementById('author').innerText = song.author;
+            document.getElementById('albumName').innerText = song.albumName;
+            document.getElementById('songKey').value = songKey;
+            
+            let snapshot = await db.ref('/annotations/' + songKey).once('value');
+            let annotations = snapshot.val();
+            
+            let lines = song.lyrics.split('\n');
+            
+            let lyrics = 
+                lines
+                .map((line, index) => {
+                    if (line === '') 
+                        return `<br>`;
+                    
+                    if (!annotations)
+                        return `<p class="lyrics__text" onclick="onLineClicked(${index})">${line}</p>`;
+                    
+                    for (const [key, value] of Object.entries(annotations)) {
+                        if (index === value.line) {
+                            delete annotations[key];
 
+                            return `<p class="highlighted__lyric lyrics__text" onclick="onAnnotationClicked('${key}')">${line}</p>`;
+                        } 
+                    }
+                    
+                    // without annotation
+                    return `<p class="lyrics__text" onclick="onLineClicked(${index})">${line}</p>`;
+                })
+                .join('');
+            document.getElementById('lyrics').innerHTML = lyrics;
+        }
+        
+        async function onAnnotationClicked(annotationId) {
+            let songKey = getSongKeyFromQuery();
+            let snapshot = await db.ref('annotations/' + songKey + '/' + annotationId).once('value');
+            let annotation = snapshot.val();
+            
+            let annotationHolder = document.getElementById('annotations');
+            annotationHolder.innerHTML = "";
+            
+            let li = document.createElement('li');
+            li.setAttribute('class', 'annotation__block');
+            
+            let username = document.createElement('h2');
+            username.innerText = annotation.username;
+            
+            let text = document.createElement('p');
+            text.innerHTML = annotation.text;
+
+            let rateDiv = document.createElement('div');
+            rateDiv.setAttribute('class', 'rate');
+
+            let likeButton = document.createElement('button');
+            likeButton.setAttribute('class', 'rate__button');
+            likeButton.innerHTML = '👍';
+            likeButton.addEventListener('click', () => {
+                likeAnnotation(songKey, annotationId);
+            });
+
+            let likeCount = document.createElement('p');
+            likeCount.setAttribute('class', 'likes');
+            let count = annotation.likes - annotation.dislikes;
+            let sign = count > 0 ? '+' : '';
+            likeCount.innerText = sign + count.toString();
+
+            let dislikeButton = document.createElement('button');
+            dislikeButton.setAttribute('class', 'rate__button');
+            dislikeButton.innerHTML = '👎';
+            dislikeButton.addEventListener('click', () => {
+                dislikeAnnotation(songKey, annotationId);
+            });
+
+            rateDiv.appendChild(likeButton);
+            rateDiv.appendChild(likeCount);
+            rateDiv.appendChild(dislikeButton);
+            
+            li.appendChild(username);
+            li.appendChild(text);
+            li.appendChild(rateDiv);
+            
+            annotationHolder.appendChild(li);
+
+            displayAnnotationsBlock();
+        }
+        
+        // function onAnnotationDelete()
+        
+        function onLineClicked(lineIndex) {
+            displayAddAnnotation();
+            document.getElementById('addAnnotationButton').onclick = (() => {
+                let text = document.getElementById('annotationInput').value.trim();
+                if (text) 
+                    addAnnotation(getSongKeyFromQuery(), getUsername(), lineIndex, text);
+            });
+        }
+        
+        function getSongKeyFromQuery() {
+            // /song.html?k=some_key
+            let query = window.location.search;
+            let urlParams = new URLSearchParams(query);
+            return urlParams.get('k');
+        }
+        
+        function onLoad() {
+            let songKey = getSongKeyFromQuery();
+            
+            db.ref('songs/' + songKey).once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    location.assign('404.html');
+                }
+                let song = snapshot.val();
+                setSongData(snapshot.key, song);
+            });
+            
+            let commentHolder = document.getElementById('comments');
+            db.ref('comments/' + songKey).on('value', (snapshot) => {
+               snapshot.forEach((childSnapshot) => {
+                   let value = childSnapshot.val();
+                   
+                   let comment = document.createElement('li');
+                   comment.setAttribute('class', 'comment');
+                   
+                   let figure = document.createElement('figure');
+                   
+                   let img = document.createElement('img');
+                   img.setAttribute('class', 'comment__profile__image');
+                   img.setAttribute('src', 'img/default_avatar.png');
+                   
+                   let figcaption = document.createElement('figcaption');
+                   figcaption.setAttribute('class', 'comment__username');
+                   figcaption.innerText = value.username;
+                   
+                   figure.appendChild(img);
+                   figure.appendChild(figcaption);
+                   
+                   let commentText = document.createElement('p');
+                   commentText.setAttribute('class', 'comment__text');
+                   commentText.innerText = value.commentText;
+                   
+                   let rateDiv = document.createElement('div');
+                   rateDiv.setAttribute('class', 'rate');
+
+                   let likeButton = document.createElement('button');
+                   likeButton.setAttribute('class', 'rate__button');
+                   likeButton.innerHTML = '👍';
+                   likeButton.addEventListener('click', () => {
+                       likeComment(snapshot.key, childSnapshot.key);
+                   });
+
+                   let likeCount = document.createElement('p');
+                   likeCount.setAttribute('class', 'likes');
+                   let count = value.likes - value.dislikes;
+                   let sign = count > 0 ? '+' : '';
+                   likeCount.innerText = sign + count.toString();
+                   
+
+                   let dislikeButton = document.createElement('button');
+                   dislikeButton.setAttribute('class', 'rate__button');
+                   dislikeButton.innerHTML = '👎';
+                   dislikeButton.addEventListener('click', () => {
+                       dislikeComment(snapshot.key, childSnapshot.key);
+                   });
+                   
+                   rateDiv.appendChild(likeButton);
+                   rateDiv.appendChild(likeCount);
+                   rateDiv.appendChild(dislikeButton);
+                   
+                   comment.appendChild(figure);
+                   comment.appendChild(commentText);
+                   comment.appendChild(rateDiv);
+                   
+                   commentHolder.appendChild(comment);
+               }) 
+            });
+        }
+        
+        function onComment() {
+            let username = getUsername();
+            let commentText = document.getElementById('commentInput').value;
+            let songId = document.getElementById('songKey').value;
+            addComment(songId, username, commentText);
+        }
+        
+        function displayItems(addAnnotation = 'none', annotationsBlock = 'none', translations = 'none') {
+            document.getElementById('addAnnotation').style.display = addAnnotation;
+            document.getElementById('annotationsBlock').style.display = annotationsBlock;
+            document.getElementById('translations').style.display = translations;
+        }
+
+        function displayAddAnnotation() { displayItems('flex', 'none', 'none'); }
+        function displayAnnotationsBlock() { displayItems('none', 'flex', 'none'); }
+        function displayTranslations() { displayItems('none', 'none', 'flex'); }
+        
+    </script>
+</body>
 </html>

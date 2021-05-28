@@ -366,6 +366,12 @@ figure {
     object-fit: cover;
 }
 
+.edit__button__image {
+    height: 54px;
+    width: 54px;
+    object-fit: cover;
+}
+
 
 /* Authorization pages */
 
@@ -423,7 +429,7 @@ figure {
 
 .song__info::before {
     content: "";
-    background-image: url('/img/album_cover.png');
+    background-image: url('img/album_cover.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -463,20 +469,25 @@ figure {
 .lyrics__info {
     margin: 0 auto;
     background-color: white;
-    max-width: 1092px;
+    max-width: 1200px;
     width: 100%;
     display: flex;
 }
 
 .lyrics {
-    margin: 38px 85px;
+    margin: 38px 70px;
+    max-width: 80%;
 }
 
-.highlited__lyric {
+.lyrics__text {
+    max-width: 600px;
+}
+
+.highlighted__lyric {
     background-color: #C4C4C4;
 }
 
-.highlited__lyric:hover {
+.highlighted__lyric:hover {
     background: rgba(0, 153, 0, 0.4);
 }
 
@@ -493,7 +504,7 @@ figure {
     border-top: 1px solid rgba(0, 153, 0, 0.4);
     max-height: 165px;
     height: 100%;
-    padding-top: 23px;
+    padding-top: 4px;
 }
 
 .comment__profile__image {
@@ -555,12 +566,13 @@ figure {
 /* Annotations */
 
 .annotations__block {
-    display: flex;
-    /* display: none; */
+    /*display: flex;*/
+     display: none; 
 }
 
 .annotations {
-    padding: 38px 0 0 79px;
+    padding-top: 38px;
+    margin-left: auto;
 }
 
 .annotations>p {

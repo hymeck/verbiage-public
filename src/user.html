@@ -8,36 +8,129 @@
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
 </head>
 
 <body>
     <header class="header" id="header">
         <a>Songs</a>
         <nav class="nav" id="nav">
-            <a>username</a>
-            <a>Logout</a>
+            <a id="usernameHeader">username</a>
+            <a onclick="onLogout()">Logout</a>
         </nav>
     </header>
     <main class="main" id="main">
         <div class="user" id="user">
             <img class="profile__picture" src="img/default_avatar.png" alt="Profile picture" id="profilePicture">
             <div class="user__info">
-                <h1 class="username">username</h1>
-                <button class="add__new__song__button" id="addNewSongButton">Add new song</button>
+                <h1 class="username" id="usernameH1">username</h1>
+                <button class="add__new__song__button" id="addNewSongButton" onclick="redirectToAddSong()">Add new song</button>
             </div>
         </div>
         <h1>Your songs:</h1>
-        <ul>
-            <li class="song__item" id="songItem">
-                <p>1</p>
-                <img src="img/album_cover.png" class="item__image" alt="Album cover">
-                <a class="song__name" id="songName">SongName</a>
-                <p class="author" id="author">Author</p>
-                <p id="albumName">Albumname</p>
-                <button><img src="img/delete.png" class="delete__button__image" id="deleteButtonImage"></button>
-            </li>
+        <ul id="songUl">
+<!--            <li class="song__item" id="songItem">-->
+<!--                <p>1</p>-->
+<!--                <img src="img/album_cover.png" class="item__image" alt="Album cover">-->
+<!--                <a class="song__name" id="songName">SongName</a>-->
+<!--                <p class="author" id="author">Author</p>-->
+<!--                <p id="albumName">Albumname</p>-->
+<!--                <button><img src="img/delete.png" class="delete__button__image" id="deleteButtonImage"></button>-->
+<!--            </li>-->
         </ul>
     </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let username = getUsername();
+            setUsernameHeader(username);
+            setUsernameH1(username);
+            setSongs();
+        });
+        
+        function setUsernameHeader(username) { document.getElementById('usernameHeader').innerHTML = username; }
+        
+        function setUsernameH1(username) { document.getElementById('usernameH1').innerHTML = username; }
+        
+        function onLogout() { logoutUser(); }
+        
+        function addSongItem(songHolder, snapshot, userId) {
+            let value = snapshot.val();
+            
+            let li = document.createElement('li');
+            li.setAttribute('class', 'song__item');
+            
+            // let key = document.createElement('p');
+            // key.innerHTML = snapshot.key;
+            
+            let img = document.createElement('img');
+            img.setAttribute('src', 'img/album_cover.png');
+            img.setAttribute('class', 'item__image');
+            img.setAttribute('alt', 'album cover');
+            
+            let title = document.createElement('a');
+            title.setAttribute('class', 'song__name');
+            title.setAttribute('href', 'song.html?k=' + snapshot.key);
+            title.innerHTML = value.title;
+            
+            let author = document.createElement('p');
+            author.setAttribute('class', 'author');
+            author.innerHTML = value.author;
+            
+            let albumName = document.createElement('p');
+            albumName.innerHTML = value.albumName;
+            
+            let del = document.createElement('button');
+            // del.
+            del.innerHTML = `<img src="img/delete.png" class="delete__button__image">`;
+            del.addEventListener('click', () => {
+                deleteSong(userId, snapshot.key);
+                songHolder.removeChild(li);
+            });
+            
+            let edit = document.createElement('button');
+            edit.innerHTML = `<img src="img/edit.png" class="edit__button__image">`;
+            edit.addEventListener('click', () => {
+                let songData = {
+                    id: snapshot.key,
+                    title: value.title,
+                    author: value.author,
+                    albumName: value.albumName,
+                    lyrics: value.lyrics,
+                    addedBy: value.addedBy
+                }
+                sessionStorage.setItem('song', JSON.stringify(songData));
+                location.assign('editSong.html');
+            });
+            
+            // li.appendChild(key);
+            li.appendChild(img);
+            li.appendChild(title);
+            li.appendChild(author);
+            li.appendChild(albumName);
+            li.appendChild(del);
+            li.appendChild(edit);
+            
+            songHolder.appendChild(li);
+        }
+        
+        function setSongs() {
+            let songHolder = document.getElementById('songUl');
+            let userId = localStorage.getItem('userId');
+            // db.ref('user-songs/' + userId).once('value', (snapshot) => {
+            db.ref('songs').orderByChild('addedBy').equalTo(userId).once('value', (snapshot) => {
+                snapshot.forEach((snapshot) => {
+                    addSongItem(songHolder, snapshot, userId);
+                });
+            });
+        }
+        
+    </script>
 </body>
 
 </html>

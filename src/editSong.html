@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
 </head>
 
 <body class="dark__body">
@@ -20,8 +26,27 @@
     </header>
     <main class="main" id="centeredMain">
         <h1>Edit song:</h1>
-        <form method="POST" name="editSong" class="song__form" id="songForm">
+<!--        <form method="post" name="editSong" class="song__form" id="songForm">-->
+<!--            <div>-->
+<!--                <input type="hidden" id="songId" value="">-->
+<!--                <input type="hidden" id="addedBy" value="">-->
+<!--                <label for="title">Title:</label><br>-->
+<!--                <input type="text" id="title" name="editSong" class="input" required><br>-->
+<!--                <label for="author">Author:</label><br>-->
+<!--                <input type="text" id="author" name="editSong" class="input" required><br>-->
+<!--                <label for="albumName">Album name:</label><br>-->
+<!--                <input type="text" id="albumName" name="editSong" class="input" required><br>-->
+<!--            </div>-->
+<!--            <div class="lyrics__form">-->
+<!--                <label for="lyrics">Lyrics:</label><br>-->
+<!--                <textarea id="lyrics" name="editSong" class="lyrics__input"></textarea><br>-->
+<!--            </div>-->
+<!--            <button type="submit" name="editSong" class="form__button" id="editSongButton" onclick="onEdit()">edit</button>-->
+<!--        </form>-->
+        <div class="song__form">
             <div>
+                <input type="hidden" id="songId" value="">
+                <input type="hidden" id="addedBy" value="">
                 <label for="title">Title:</label><br>
                 <input type="text" id="title" name="editSong" class="input" required><br>
                 <label for="author">Author:</label><br>
@@ -31,11 +56,61 @@
             </div>
             <div class="lyrics__form">
                 <label for="lyrics">Lyrics:</label><br>
-                <input type="text" id="lyrics" name="editSong" class="lyrics__input"><br>
+                <textarea id="lyrics" name="editSong" class="lyrics__input"></textarea><br>
             </div>
-            <input type="submit" value="Edit" name="editSong" class="form__button" id="addSongButton">
-        </form>
+            <button type="submit" name="editSong" class="form__button" id="editSongButton" onclick="onEdit()">edit</button>
+        </div>
     </main>
+    
+    <script>
+        function setValue(elementId, value) { document.getElementById(elementId).value = value; }
+        function setId(id) { setValue('songId', id); }
+        function setTitle(title) { setValue('title', title); }
+        function setAuthor(author) { setValue('author', author); }
+        function setAlbumName(albumName) { setValue('albumName', albumName); }
+        function setLyrics(lyrics) { setValue('lyrics', lyrics); }
+        function setAddedBy(addedBy) { setValue('addedBy', addedBy); }
+
+        function setSongData(songData) {
+            setId(songData.id);
+            setTitle(songData.title);
+            setAuthor(songData.author);
+            setAlbumName(songData.albumName);
+            setLyrics(songData.lyrics);
+            setAddedBy(songData.addedBy);
+        }
+        
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let songJson = sessionStorage.getItem('song');
+            if (songJson) {
+                setSongData(JSON.parse(songJson));
+            }
+        });
+        
+        function onEdit() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) 
+                return;
+            let songData = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                albumName: document.getElementById('albumName').value,
+                lyrics: document.getElementById('lyrics').value,
+                addedBy: document.getElementById('addedBy').value
+            };
+            let songId = document.getElementById('songId').value;
+            
+            editSong(userId, songId, songData)
+                .then(function onSuccess(res) {
+                sessionStorage.removeItem('song');
+                location.assign('user.html');
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+        }
+        
+    </script>
 </body>
 
 </html>

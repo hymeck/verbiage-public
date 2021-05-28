@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Days+One&family=Sarabun&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
 </head>
 
 <body class="dark__body">
@@ -20,7 +26,7 @@
     </header>
     <main class="main" id="centeredMain">
         <h1>Add new song:</h1>
-        <form method="POST" name="addSong" class="song__form" id="songForm">
+        <form method="POST" name="addSong" class="song__form" id="songForm" action="javascript:void(0);">
             <div>
                 <label for="title">Title:</label><br>
                 <input type="text" id="title" name="addSong" class="input" required><br>
@@ -31,11 +37,34 @@
             </div>
             <div class="lyrics__form">
                 <label for="lyrics">Lyrics:</label><br>
-                <input type="text" id="lyrics" name="addSong" class="lyrics__input"><br>
+                <textarea id="lyrics" name="addSong" class="lyrics__input"></textarea><br/>
             </div>
-            <input type="submit" value="Add" name="addSong" class="form__button" id="addSongButton">
+            <button type="submit" name="addSong" class="form__button" id="addSongButton" onclick="onAddSong()">add</button>
         </form>
     </main>
+
+    <script>
+        function getTitle() { return document.getElementById('title').value; }
+        function getAuthor() { return document.getElementById('author').value; }
+        function getAlbumName() { return document.getElementById('albumName').value; }
+        function getLyrics() { return document.getElementById('lyrics').value; }
+        
+        function onAddSong() {
+            let userId = localStorage.getItem('userId');
+            const songData = {
+                title: getTitle(),
+                author: getAuthor(),
+                albumName: getAlbumName(),
+                lyrics: getLyrics(),
+                addedBy: userId
+            }
+            
+            addSong(userId, songData).then(function onSuccess(res) {
+                // window.location.href = "user.html";
+                location.assign('user.html');
+            });
+        }
+    </script>
 </body>
 
 </html>
